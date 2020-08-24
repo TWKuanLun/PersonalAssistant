@@ -43,7 +43,7 @@ namespace PersonalAssistant.Controllers
                     Fees = x.Fees,
                     Price = x.Price,
                     StockCode = x.StockCode,
-                    Type = x.Type
+                    TransactionType = x.TransactionType
                 })//remove user sid to reduce json size
                 .AsNoTracking().ToArrayAsync());
         }

@@ -20,6 +20,9 @@ namespace PersonalAssistant.Models.AccountManager
 
         public AccountInitialization Account { get; set; }
 
+        public int? IncomeCategoryID { get; set; }
+        public IncomeCategory IncomeCategory { get; set; }
+
         [Required]
         public decimal Amount { get; set; }
 

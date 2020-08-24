@@ -26,6 +26,8 @@ namespace PersonalAssistant.Models.AccountManager
         public decimal? Fees { get; set; }
 
         public string Remarks { get; set; }
+        public int? ExpenditureWayID { get; set; }
+        public ExpenditureWay ExpenditureWay { get; set; }
 
         public int? ExpenditureTypeID { get; set; }
 
