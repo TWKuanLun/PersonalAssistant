@@ -21,7 +21,7 @@ const NavMenu = props => {
         <Grid container direction='row' justify='space-between' alignItems='center'>
           <Grid item>
             <Grid container direction='row' alignItems='center'>
-              <Hidden mdUp>
+              <Hidden lgUp>
                 <Grid item>
                   <IconButton edge='start' color='inherit' aria-label='menu' onClick={(e) => props.switch_menu_list(true)}>
                     <MenuIcon />

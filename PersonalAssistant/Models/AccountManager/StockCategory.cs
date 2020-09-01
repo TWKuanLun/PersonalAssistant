@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PersonalAssistant.Models.AccountManager
 {
-    public enum StockType
+    public enum StockCategory
     {
         現股, 融資, 融券
     }

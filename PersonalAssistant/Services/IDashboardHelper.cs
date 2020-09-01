@@ -40,7 +40,7 @@ namespace PersonalAssistant.Services
         /// <param name="end">小於End</param>
         /// <param name="start">大於等於Start</param>
         /// <returns></returns>
-        Dictionary<(StockType type, string stockNo), int> GetDateRangeStocksInit(string userID, DateTime end, DateTime? start = null);
+        Dictionary<(StockCategory type, string stockNo), int> GetDateRangeStocksInit(string userID, DateTime end, DateTime? start = null);
         /// <summary>
         /// 獲得指定時間範圍的股票總買進和總賣出的數量總和
         /// </summary>
@@ -48,7 +48,7 @@ namespace PersonalAssistant.Services
         /// <param name="end">小於End</param>
         /// <param name="start">大於等於Start</param>
         /// <returns></returns>
-        Dictionary<(StockType type, string stockNo), int> GetDateRangeStockChanges(string userID, DateTime end, DateTime? start = null);
+        Dictionary<(StockCategory type, string stockNo), int> GetDateRangeStockChanges(string userID, DateTime end, DateTime? start = null);
 
         /// <summary>
         /// 獲得指定日期的股票價格
@@ -56,6 +56,6 @@ namespace PersonalAssistant.Services
         /// <param name="stockAmount"></param>
         /// <param name="end">不給end會獲得最即時的價格</param>
         /// <returns></returns>
-        Task<IEnumerable<(string Name, decimal Balance, string Type, string Date)>> GetStockPrice(Dictionary<(StockType type, string stockNo), int> stockAmount, DateTime? end);
+        Task<IEnumerable<(string Name, decimal Balance, string Type, string Date)>> GetStockPrice(Dictionary<(StockCategory type, string stockNo), int> stockAmount, DateTime? end);
     }
 }

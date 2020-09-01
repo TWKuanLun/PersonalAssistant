@@ -171,7 +171,7 @@ namespace PersonalAssistant.Services
             }
             return clone;
         }
-        public Dictionary<(Models.AccountManager.StockType type, string stockNo), int> GetDateRangeStockChanges(string userID, DateTime end, DateTime? start = null)
+        public Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int> GetDateRangeStockChanges(string userID, DateTime end, DateTime? start = null)
         {
             var sumBuy = context.StockTransaction.Where(x => x.OwnerID == userID && x.TransactionType == StockTransactionType.Buy &&
                                                              x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start))
@@ -184,7 +184,7 @@ namespace PersonalAssistant.Services
                                                               .AsEnumerable()
                                                               .GroupBy(x => new { x.StockCode, x.Type })
                                                               .ToDictionary(g => (g.Key.Type, g.Key.StockCode), g => g.Sum(x => x.Amount));
-            var nowStockAmount = new Dictionary<(Models.AccountManager.StockType type, string stockNo), int>();
+            var nowStockAmount = new Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int>();
             foreach (var pair in sumBuy)
             {
                 if (nowStockAmount.ContainsKey(pair.Key))
@@ -213,11 +213,11 @@ namespace PersonalAssistant.Services
         {
             return context.AccountInitialization.Where(x => x.OwnerID == userID && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start)).ToList();
         }
-        public Dictionary<(Models.AccountManager.StockType type, string stockNo), int> GetDateRangeStocksInit(string userID, DateTime end, DateTime? start = null)
+        public Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int> GetDateRangeStocksInit(string userID, DateTime end, DateTime? start = null)
         {
-            return context.StockInitialization.Where(x => x.OwnerID == userID && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start)).ToDictionary(x => (x.Type, x.StockCode), x => x.Amount);
+            return context.StockInitialization.Where(x => x.OwnerID == userID && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start)).ToDictionary(x => (x.Category, x.StockCode), x => x.Amount);
         }
-        public async Task<IEnumerable<(string Name, decimal Balance, string Type, string Date)>> GetStockPrice(Dictionary<(Models.AccountManager.StockType type, string stockNo), int> stockAmount, DateTime? end)
+        public async Task<IEnumerable<(string Name, decimal Balance, string Type, string Date)>> GetStockPrice(Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int> stockAmount, DateTime? end)
         {
             stockAmount = stockAmount.Where(x => x.Value > 0).ToDictionary(x => x.Key, x => x.Value);
             if (end.HasValue)

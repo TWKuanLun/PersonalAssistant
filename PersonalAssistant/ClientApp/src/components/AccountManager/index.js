@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from "react-redux";
 import { Route } from 'react-router';
 import { Link, withRouter } from 'react-router-dom';
-import { Tabs, Tab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 
-import RestfulTable from './RestfulTable';
-import { TabPaths } from '../helper/RouterConstants'
-import Dashboard from './Dashboard';
+import RestfulTable from '../RestfulTable';
+import { TabPaths } from '../../helper/RouterConstants'
+import Dashboard from '../Dashboard';
+import Expenditure from './Expenditure';
 
 function a11yProps(index) {
   return {
@@ -75,7 +77,6 @@ const AccountManager = props => {
         variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
         className={classes.tabs}
       >
         <Tab label={translate.dashboard} component={Link} to={TabPaths.AccountManager.Dashboard} {...a11yProps(0)} />
@@ -89,7 +90,7 @@ const AccountManager = props => {
       </Tabs>
       <Route exact path={`${props.match.path}`} render={() => <Dashboard />} />
       <Route path={`${props.match.path}/Dashboard`} render={() => <Dashboard />} />
-      <Route path={`${props.match.path}/Expenditures`} render={() => <RestfulTable controller='Expenditures' />} />
+      <Route path={`${props.match.path}/Expenditures`} render={() => <Expenditure />} />
       <Route path={`${props.match.path}/Incomes`} render={() => <RestfulTable controller='Incomes' />} />
       <Route path={`${props.match.path}/InternalTransfers`} render={() => <RestfulTable controller='InternalTransfers' />} />
       <Route path={`${props.match.path}/StockTransactions`} render={() => <RestfulTable controller='StockTransactions' />} />

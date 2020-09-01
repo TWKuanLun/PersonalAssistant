@@ -28,24 +28,12 @@ namespace PersonalAssistant.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            return Ok(await _context.StockTransaction.Where(x => x.OwnerID == userID)
-                .Select(x => new StockTransaction
-                {
-                    ID = x.ID,
-                    Account = x.Account,
-                    Amount = x.Amount,
-                    EffectiveDate = x.EffectiveDate,
-                    Fees = x.Fees,
-                    Price = x.Price,
-                    StockCode = x.StockCode,
-                    TransactionType = x.TransactionType
-                })//remove user sid to reduce json size
-                .AsNoTracking().ToArrayAsync());
+            return Ok(_context.StockTransaction.Where(x => x.OwnerID == userID).ForEach(x => { x.OwnerID = default; }));
         }
 
         // GET api/<controller>/5
@@ -57,9 +45,7 @@ namespace PersonalAssistant.Controllers
                 return Forbid();
             var stockTransaction = await _context.StockTransaction.FindAsync(id);
             if (stockTransaction == null)
-            {
                 return NotFound();
-            }
             if (userID != stockTransaction.OwnerID)
                 return Unauthorized();
             return Ok(stockTransaction);

@@ -24,7 +24,7 @@ namespace PersonalAssistant.Models.AccountManager
         public string StockCode { get; set; }
 
         [Required]
-        public StockType Type { get; set; }
+        public StockCategory Type { get; set; }
 
         [Required]
         public StockTransactionType TransactionType { get; set; }

@@ -19,5 +19,6 @@ export const inputType = {
     select: 'select',
     date: 'date',
     datetime: 'dateTime',
-    text: 'text'
+    text: 'text',
+    number: 'number'
 };
