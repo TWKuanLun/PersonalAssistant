@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import AddOrEditForm from '../AddOrEditForm';
 import { HttpMethod } from '../../helper/GeneralConstants';
 import { WebApi } from '../../helper/RouterConstants';
+import { inputType } from '../../helper/GeneralConstants';
+import oidc from '../oidc';
 
-class EditDialog extends Component {
+class ExpenditureDialog extends Component {
     constructor(props){
         super(props);
         this.state = {
-            values: [],
+            values: [null, null, null, null, null, null, null],
             accountOptions: [],
             wayOptions: [],
             typeOptions: []
@@ -19,7 +21,6 @@ class EditDialog extends Component {
         this.setState({values: values});
     }
     componentDidMount(){
-        const { oidc } = this.props;
         oidc(HttpMethod.Get, WebApi.AccountInitializations).then(json => {
             this.setState({ accountOptions: json.map(e=>({label: e.Name, value: e.ID})) });
         });
@@ -32,6 +33,9 @@ class EditDialog extends Component {
     }
     render(){
         const {accountOptions, wayOptions, typeOptions} = this.state;
+        if(accountOptions.length === 0 || wayOptions.length === 0 || typeOptions.length === 0){
+            return null;
+        }
         const fieldsInfo = [
             { label: 'EffectiveDate', type: inputType.datetime, required: true },
             { label: 'Account', type: inputType.select, required: true, selectOptions: accountOptions},
@@ -41,11 +45,8 @@ class EditDialog extends Component {
             { label: 'ExpenditureWay', type: inputType.select, required: true, selectOptions: wayOptions },
             { label: 'ExpenditureType', type: inputType.select, required: true, selectOptions: typeOptions }
         ];
-        return <>
-            
-            <AddOrEditForm title={'Expenditure'} fieldsInfo={fieldsInfo} />
-        </>;
+        return <AddOrEditForm title={'Expenditure'} fieldsInfo={fieldsInfo} />;
     }
 }
 
-export default EditDialog;
+export default ExpenditureDialog;

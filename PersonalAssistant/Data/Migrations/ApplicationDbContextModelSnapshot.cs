@@ -448,6 +448,9 @@ namespace PersonalAssistant.Data.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EffectiveDate")
                         .HasColumnType("datetime2");
 
@@ -459,9 +462,6 @@ namespace PersonalAssistant.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("ID");
 

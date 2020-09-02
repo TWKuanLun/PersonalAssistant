@@ -19,7 +19,7 @@ import EditDialog from './EditDialog';
 const styles = {
 };
 
-class Expenditure extends Component {
+class ExpenditureWay extends Component {
     static displayName = Expenditure.name;
     constructor(props) {
         super(props);
@@ -29,7 +29,7 @@ class Expenditure extends Component {
         };
     }
     componentDidMount() {
-        oidc(HttpMethod.Get, WebApi.Expenditures).then(json => {
+        oidc(HttpMethod.Get, WebApi.ExpenditureWays).then(json => {
             this.setState({ apiResult: json, loading: false });
         });
     }
@@ -44,42 +44,9 @@ class Expenditure extends Component {
         
         const columnsInfo = [
             {
-                headText: 'Effective Date',
-                align: 'left',
-                fieldName: 'EffectiveDate',
-                type: 'date'
-            },
-            {
-                headText: 'Account',
-                align: 'right',
-                fieldName: 'Account.Name'
-            },
-            {
                 headText: 'Expenditure Way',
-                align: 'right',
-                fieldName: 'ExpenditureWay.WayName'
-            },
-            {
-                headText: 'Expenditure Way',
-                align: 'right',
-                fieldName: 'ExpenditureType.TypeName'
-            },
-            {
-                headText: 'Amount',
-                align: 'right',
-                fieldName: 'Amount',
-                type: 'number'
-            },
-            {
-                headText: 'Fees',
-                align: 'right',
-                fieldName: 'Fees',
-                type: 'number'
-            },
-            {
-                headText: 'Remarks',
-                align: 'right',
-                fieldName: 'Remarks'
+                align: 'center',
+                fieldName: 'WayName'
             }
         ];
         return (
@@ -93,7 +60,7 @@ class Expenditure extends Component {
                     <SharedTable data={apiResult} columnsInfo={columnsInfo} />
                 </Grid>
                 <Grid item xs={12}>
-                    <EditDialog />
+                    <EditDialog oidc={this.oidc} />
                 </Grid>
             </Grid>
         );
@@ -104,4 +71,4 @@ const mapStateToProps = store => ({
     translate: {
     }
 });
-export default connect(mapStateToProps)(withStyles(styles)(Expenditure));
+export default connect(mapStateToProps)(withStyles(styles)(ExpenditureWay));

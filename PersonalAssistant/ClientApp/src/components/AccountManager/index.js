@@ -5,32 +5,15 @@ import { Link, withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import Container from '@material-ui/core/Container';
 
 import RestfulTable from '../RestfulTable';
 import { TabPaths } from '../../helper/RouterConstants'
 import Dashboard from '../Dashboard';
 import Expenditure from './Expenditure';
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
+import EditDialog from './EditDialog';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    display: 'flex',
-    height: '100vh',
-    backgroundColor: theme.palette.background.paper,
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
-  tabPanel: {
-    width: '100vw',
-  }
 }));
 const AccountManager = props => {
   const classes = useStyles();
@@ -71,33 +54,32 @@ const AccountManager = props => {
   };
 
   return (
-    <div className={classes.root}>
+    <Container>
       <Tabs
-        orientation="vertical"
-        variant="scrollable"
+        variant='scrollable'
         value={value}
         onChange={handleChange}
-        className={classes.tabs}
+        centered
       >
-        <Tab label={translate.dashboard} component={Link} to={TabPaths.AccountManager.Dashboard} {...a11yProps(0)} />
-        <Tab label={translate.expenditure} component={Link} to={TabPaths.AccountManager.Expenditures} {...a11yProps(1)} />
-        <Tab label={translate.income} component={Link} to={TabPaths.AccountManager.Incomes} {...a11yProps(2)} />
-        <Tab label={translate.internalTransfer} component={Link} to={TabPaths.AccountManager.InternalTransfers} {...a11yProps(3)} />
-        <Tab label={translate.stockTransaction} component={Link} to={TabPaths.AccountManager.StockTransactions} {...a11yProps(4)} />
-        <Tab label={translate.expenditureType} component={Link} to={TabPaths.AccountManager.ExpenditureTypes} {...a11yProps(5)} />
-        <Tab label={translate.accountInitialization} component={Link} to={TabPaths.AccountManager.AccountInitializations} {...a11yProps(6)} />
-        <Tab label={translate.stockInitialization} component={Link} to={TabPaths.AccountManager.StockInitializations} {...a11yProps(7)} />
+        <Tab label={translate.dashboard} component={Link} to={TabPaths.AccountManager.Dashboard} />
+        <Tab label={translate.expenditure} component={Link} to={TabPaths.AccountManager.Expenditures} />
+        <Tab label={translate.income} component={Link} to={TabPaths.AccountManager.Incomes} />
+        <Tab label={translate.internalTransfer} component={Link} to={TabPaths.AccountManager.InternalTransfers} />
+        <Tab label={translate.stockTransaction} component={Link} to={TabPaths.AccountManager.StockTransactions} />
+        <Tab label={translate.expenditureType} component={Link} to={TabPaths.AccountManager.ExpenditureTypes} />
+        <Tab label={translate.accountInitialization} component={Link} to={TabPaths.AccountManager.AccountInitializations} />
+        <Tab label={translate.stockInitialization} component={Link} to={TabPaths.AccountManager.StockInitializations} />
       </Tabs>
       <Route exact path={`${props.match.path}`} render={() => <Dashboard />} />
-      <Route path={`${props.match.path}/Dashboard`} render={() => <Dashboard />} />
-      <Route path={`${props.match.path}/Expenditures`} render={() => <Expenditure />} />
-      <Route path={`${props.match.path}/Incomes`} render={() => <RestfulTable controller='Incomes' />} />
-      <Route path={`${props.match.path}/InternalTransfers`} render={() => <RestfulTable controller='InternalTransfers' />} />
-      <Route path={`${props.match.path}/StockTransactions`} render={() => <RestfulTable controller='StockTransactions' />} />
-      <Route path={`${props.match.path}/ExpenditureTypes`} render={() => <RestfulTable controller='ExpenditureTypes' />} />
-      <Route path={`${props.match.path}/AccountInitializations`} render={() => <RestfulTable controller='AccountInitializations' />} />
-      <Route path={`${props.match.path}/StockInitializations`} render={() => <RestfulTable controller='StockInitializations' />} />
-    </div>
+      <Route path={TabPaths.AccountManager.Dashboard} render={() => <Dashboard />} />
+      <Route path={TabPaths.AccountManager.Expenditures} render={() => <Expenditure />} />
+      <Route path={TabPaths.AccountManager.Incomes} render={() => <RestfulTable controller='Incomes' />} />
+      <Route path={TabPaths.AccountManager.InternalTransfers} render={() => <RestfulTable controller='InternalTransfers' />} />
+      <Route path={TabPaths.AccountManager.StockTransactions} render={() => <RestfulTable controller='StockTransactions' />} />
+      <Route path={TabPaths.AccountManager.ExpenditureTypes} render={() => <RestfulTable controller='ExpenditureTypes' />} />
+      <Route path={TabPaths.AccountManager.AccountInitializations} render={() => <RestfulTable controller='AccountInitializations' />} />
+      <Route path={TabPaths.AccountManager.StockInitializations} render={() => <RestfulTable controller='StockInitializations' />} />
+    </Container>
   );
 }
 
